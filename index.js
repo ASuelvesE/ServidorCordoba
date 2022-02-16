@@ -22,33 +22,41 @@ io.on("connection", (socket) => {
 
 
   socket.on('nuevo usuario', function(nombre){
-    var coincidencia = 0;
-    for (var valor of usuarios) {
-      if(valor == nombre){
-        console.log("Se ha encontrado una coincidencia para: " + valor)
-        coincidencia ++;
-        break;
+      var coincidencia = 0;
+      for (var valor of usuarios) {
+          if(valor == nombre){
+            console.log("Se ha encontrado una coincidencia para: " + valor)
+            coincidencia ++;
+            break;
+        }
       }
-    }
-    if(coincidencia == 0){
-      console.log("No hay ninguna coincidencia");
-      usuarios.push(nombre);
-      console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
-    }
-    console.log("Usuarios conectados: ");
-    for (var valor of usuarios) {
-      console.log("Usuario: " + valor);
-    }
-    io.emit('nuevo usuario',usuarios);
+      if(coincidencia == 0){
+          console.log("No hay ninguna coincidencia");
+          usuarios.push(nombre);
+          console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
+      }
+      console.log("Usuarios conectados: ");
+      for (var valor of usuarios) {
+          console.log("Usuario: " + valor);
+      }
+      io.emit('nuevo usuario',usuarios);
+    });
+
+    socket.on('desconecta menu', function(msg){
+      let posicion = usuarios.indexOf(msg);
+      usuarios.splice(posicion, 1);
+      console.log("Se ha eliminado del array a: " + msg);
+      for (var valor of usuarios) {
+        console.log("Usuarios conectados: " + valor);
+      }
   });
 
-  socket.on('desconecta menu', function(msg){
-    let posicion = usuarios.indexOf(msg);
-    usuarios.splice(posicion, 1);
-    console.log("Se ha eliminado del array a: " + msg);
-    for (var valor of usuarios) {
-      console.log("Usuarios conectados: " + valor);
-    }
+
+    socket.on('posicion', function(msg){
+
+      console.log("Se recibido la posicion : " + msg);
+      io.emit('posicion',msg)
+
   });
 
 
