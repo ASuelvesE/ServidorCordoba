@@ -26,16 +26,19 @@ io.on("connection", (socket) => {
     var coincidencia = 0;
     for (var valor of usuarios) {
       if(valor == nombre){
+        console.log("Se ha encontrado una coincidencia para: " + valor)
         coincidencia ++;
         break;
       }
     }
-    if(coincidencia > 0){
+    if(coincidencia == 0){
+      console.log("No hay ninguna coincidencia");
       usuarios.push(nombre);
       console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
     }
+    console.log("Usuarios conectados: ");
     for (var valor of usuarios) {
-      console.log("Usuarios conectados: " + valor);
+      console.log("Usuario: " + valor);
     }
     io.emit('nuevo usuario',usuarios);
   });
