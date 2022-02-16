@@ -26,9 +26,9 @@ io.on("connection", (socket) => {
       if(valor != nombre){
         usuarios.push(nombre);
         console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
-        console.log("Usuarios conectados: " + valor);
       }
     }
+    console.log("Usuarios conectados: " + valor);
     io.emit('nuevo usuario',usuarios);
   });
 
