@@ -22,12 +22,14 @@ io.on("connection", (socket) => {
 
 
   socket.on('nuevo usuario', function(nombre){
-    console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
-    usuarios.push(nombre);
-    io.emit('nuevo usuario',usuarios);
     for (var valor of usuarios) {
-      console.log("Usuarios conectados: " + valor);
+      if(valor != nombre){
+        usuarios.push(nombre);
+        console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
+        console.log("Usuarios conectados: " + valor);
+      }
     }
+    io.emit('nuevo usuario',usuarios);
   });
 
   socket.on('desconecta menu', function(msg){
