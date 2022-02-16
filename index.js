@@ -28,8 +28,6 @@ io.on("connection", (socket) => {
   });
 
 
-  
-
 
   socket.on('disconnect', () => {
     console.log('Un socket se ha desconectado');
