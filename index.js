@@ -30,6 +30,14 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on('usuario desconectado', function(msg){
+    let posicion = usuarios.indexOf(msg);
+    usuarios.splice(posicion, 1);
+    console.log("Se ha eliminado del array a: " + msg);
+    for (var valor of usuarios) {
+      console.log("Usuarios conectados: " + valor);
+    }
+  });
 
 
   socket.on('disconnect', () => {
