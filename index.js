@@ -56,7 +56,10 @@ io.on("connection", (socket) => {
     console.log('Un socket se ha desconectado');
     numeroSockets --;
     console.log("El numero de sockets actualmente es: " + numeroSockets);
-
+    if(numeroSockets = 0){
+      usuarios.length = 0;
+      console.log("Ahora mismo no tenemos ningun usuario conectado")
+    }
   });
 
 });
