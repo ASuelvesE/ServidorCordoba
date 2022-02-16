@@ -24,7 +24,10 @@ io.on("connection", (socket) => {
   socket.on('nuevo usuario', function(nombre){
     console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
     usuarios.push(nombre);
-    io.emit('nuevo usuario',nombre);
+    io.emit('nuevo usuario',usuarios);
+    for (var valor of usuarios) {
+      console.log("Usuarios conectados: " + valor);
+    }
   });
 
 
