@@ -22,6 +22,7 @@ io.on("connection", (socket) => {
 
 
   socket.on('nuevo usuario', function(nombre){
+    usuarios.push(nombre);
     var coincidencia = 0;
     for (var valor of usuarios) {
       if(valor == nombre){
