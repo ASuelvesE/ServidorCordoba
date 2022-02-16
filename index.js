@@ -22,14 +22,20 @@ io.on("connection", (socket) => {
 
 
   socket.on('nuevo usuario', function(nombre){
-    usuarios.push(nombre);
+    var coincidencia = 0;
     for (var valor of usuarios) {
-      if(valor != nombre){
-        usuarios.push(nombre);
+      if(valor == nombre){
+        coincidencia ++;
+        break;
       }
     }
-    console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
-    console.log("Usuarios conectados: " + valor);
+    if(coincidencia > 0){
+      usuarios.push(nombre);
+      console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
+    }
+    for (var valor of usuarios) {
+      console.log("Usuarios conectados: " + valor);
+    }
     io.emit('nuevo usuario',usuarios);
   });
 
