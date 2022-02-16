@@ -16,7 +16,7 @@ var usuarios  = [];
 // server-side
 io.on("connection", (socket) => {
 
-    console.log("Un nuevo socket se ha conectado"); // ojIckSD2jqNzOqIrAGzL
+    console.log("Un nuevo socket se ha conectado"); 
     numeroSockets ++;
     console.log("El numero de sockets actualmente es: " + numeroSockets);
 
@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on('usuario desconectado', function(msg){
+  socket.on('desconecta menu', function(msg){
     let posicion = usuarios.indexOf(msg);
     usuarios.splice(posicion, 1);
     console.log("Se ha eliminado del array a: " + msg);
