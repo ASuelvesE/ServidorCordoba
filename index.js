@@ -66,6 +66,11 @@ io.on("connection", (socket) => {
       io.emit('envia mensaje',msg,nom)
     });
 
+    socket.on('estoy listo', function(msg){
+      console.log("El jugador " + msg + " está READY")
+    io.emit('estoy listo',msg)
+  });
+
 
   socket.on('disconnect', () => {
     console.log('Un socket se ha desconectado');
