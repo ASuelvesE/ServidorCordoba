@@ -53,11 +53,11 @@ io.on("connection", (socket) => {
 
 
     socket.on('posicionX', function(msg,enemigo){
-      console.log("Se recibido la posicionX del enemigo : " + enemigo + " , es: " + msg);
+    //  console.log("Se recibido la posicionX del enemigo : " + enemigo + " , es: " + msg);
       io.emit('posicionX',msg,enemigo)
    });
     socket.on('posicionY', function(msg,enemigo){
-      console.log("Se recibido la posicionY del enemigo : " + enemigo + " , es: " + msg);
+     // console.log("Se recibido la posicionY del enemigo : " + enemigo + " , es: " + msg);
       io.emit('posicionY',msg,enemigo)
     });
 
