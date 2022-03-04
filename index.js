@@ -70,8 +70,7 @@ io.on("connection", (socket) => {
 
     socket.on('estoy listo', function(msg){
       console.log("El jugador " + msg + " está READY");
-      socket.broadcast.emit('estoy listo',msg)
-    //io.emit('estoy listo',msg)
+      io.emit('estoy listo',msg)
   });
 
   socket.on('ganador', function(msg){
