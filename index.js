@@ -10,91 +10,84 @@ const io = require("socket.io")(httpServer, {
   }
 });
 
-
-var numeroSockets = 0;
-var usuarios  = [];
+var usuarios = [];
 // server-side
 io.on("connection", (socket) => {
 
-    console.log("Un nuevo socket se ha conectado"); 
-    numeroSockets ++;
-    console.log("El numero de sockets actualmente es: " + numeroSockets);
+  console.log("Un nuevo socket se ha conectado");
 
+  socket.on('nuevo usuario', function (nombre) {
 
-  socket.on('nuevo usuario', function(nombre){
-      var coincidencia = 0;
-      for (var valor of usuarios) {
-          if(valor == nombre){
-            console.log("Se ha encontrado una coincidencia para: " + valor)
-            coincidencia ++;
-            break;
-        }
-      }
-      if(coincidencia == 0){
-          console.log("No hay ninguna coincidencia");
-          usuarios.push(nombre);
-          console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
-      }
-      console.log("Usuarios conectados: ");
-      for (var valor of usuarios) {
-          console.log("Usuario: " + valor);
-      }
-      io.emit('nuevo usuario',usuarios);
-    });
+    console.log('Usuario añadido al array');
+    usuarios.push(new Usuario(msg, socket.id, sala));
 
-    socket.on('desconecta menu', function(msg){
-      let posicion = usuarios.indexOf(msg);
-      usuarios.splice(posicion, 1);
-      console.log("Se ha eliminado del array a: " + msg);
-      for (var valor of usuarios) {
-        console.log("Usuarios conectados: " + valor);
-      }
+    console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
+
+    console.log("Usuarios conectados: ");
+    for (var valor of usuarios) {
+      console.log("Usuario: " + valor);
+    }
+    io.emit('actualiza usuarios', usuarios);
   });
 
 
-    socket.on('posicionX', function(msg,enemigo){
+  socket.on('posicionX', function (msg, enemigo) {
     //  console.log("Se recibido la posicionX del enemigo : " + enemigo + " , es: " + msg);
-     // io.emit('posicionX',msg,enemigo)
-      socket.broadcast.emit('posicionX',msg,enemigo)
-   });
-    socket.on('posicionY', function(msg,enemigo){
-     // console.log("Se recibido la posicionY del enemigo : " + enemigo + " , es: " + msg);
-     // io.emit('posicionY',msg,enemigo)
-      socket.broadcast.emit('posicionY',msg,enemigo)
-    });
-
-    socket.on('envia mensaje', function(msg,nom){
-        console.log(nom + ": " + msg)
-      io.emit('envia mensaje',msg,nom)
-    });
-
-    socket.on('estoy listo', function(msg){
-      console.log("El jugador " + msg + " está READY");
-      io.emit('estoy listo',msg)
+    // io.emit('posicionX',msg,enemigo)
+    socket.broadcast.emit('posicionX', msg, enemigo)
+  });
+  socket.on('posicionY', function (msg, enemigo) {
+    // console.log("Se recibido la posicionY del enemigo : " + enemigo + " , es: " + msg);
+    // io.emit('posicionY',msg,enemigo)
+    socket.broadcast.emit('posicionY', msg, enemigo)
   });
 
-  socket.on('ganador', function(msg){
+  socket.on('envia mensaje', function (msg, nom) {
+    console.log(nom + ": " + msg)
+    io.emit('envia mensaje', msg, nom)
+  });
+
+  socket.on('estoy listo', function (msg) {
+    console.log("El jugador " + msg + " está READY");
+    io.emit('estoy listo', msg)
+  });
+
+  socket.on('ganador', function (msg) {
     console.log("El jugador " + msg + " ha ganado")
-  io.emit('ganador',msg)
+    io.emit('ganador', msg)
   });
 
-  socket.on('perdedor', function(msg){
+  socket.on('perdedor', function (msg) {
     console.log("El jugador " + msg + " ha perdido")
-  io.emit('perdedor',msg)
+    io.emit('perdedor', msg)
   });
 
 
   socket.on('disconnect', () => {
-    console.log('Un socket se ha desconectado');
-    numeroSockets --;
-    console.log("El numero de sockets actualmente es: " + numeroSockets);
-    if(numeroSockets == 0){
-      usuarios.length = 0;
-      console.log("Ahora mismo no tenemos ningun usuario conectado")
+    console.log('Un usuario se ha desconectado: ' + socket.id);
+    for (var i = 0; i < usuarios.length; i++) {
+      if (usuarios[i].socket == socket.id) {
+        console.log("Se ha eliminado del array a: " + usuarios[i].nombre);
+        usuarios.splice(i, 1);
+      }
     }
+    io.emit('actualiza usuarios', usuarios);
   });
 
 });
-httpServer.listen(app.get('port'), function() {
+httpServer.listen(app.get('port'), function () {
   console.log('Servidor funcionando en el puerto:', app.get('port'));
 });
+
+
+
+////////////////////-------CLASES ------------------------------------////////////////////////////
+
+
+class Usuario {
+  constructor(nombre, socket, sala) {
+    this.nombre = nombre;
+    this.socket = socket;
+    this.sala = sala;
+  }
+}
