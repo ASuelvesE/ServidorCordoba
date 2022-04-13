@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
   socket.on('nuevo usuario', function (nombre) {
 
     console.log('Usuario añadido al array');
-    usuarios.push(new Usuario(msg, socket.id));
+    usuarios.push(new Usuario(nombre, socket.id));
 
     console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
 
