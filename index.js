@@ -19,7 +19,7 @@ io.on("connection", (socket) => {
   socket.on('nuevo usuario', function (nombre) {
 
     console.log('Usuario añadido al array');
-    usuarios.push(new Usuario(msg, socket.id, sala));
+    usuarios.push(new Usuario(msg, socket.id));
 
     console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
 
@@ -85,9 +85,9 @@ httpServer.listen(app.get('port'), function () {
 
 
 class Usuario {
-  constructor(nombre, socket, sala) {
+  constructor(nombre, socket) {
     this.nombre = nombre;
     this.socket = socket;
-    this.sala = sala;
+
   }
 }
