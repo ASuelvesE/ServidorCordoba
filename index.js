@@ -30,8 +30,8 @@ io.on("connection", (socket) => {
     console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
 
     console.log("Usuarios conectados: ");
-    for (var valor of usuarios) {
-      console.log("Usuario: " + valor);
+    for(var i = 0; i<usuarios.length;i++){
+      console.log(usuarios[i].nombre)
     }
     io.emit('actualiza usuarios', usuarios);
   });
