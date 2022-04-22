@@ -37,6 +37,7 @@ io.on("connection", (socket) => {
   });
 
 
+  
   socket.on('posicionX', function (msg, enemigo) {
     //  console.log("Se recibido la posicionX del enemigo : " + enemigo + " , es: " + msg);
     // io.emit('posicionX',msg,enemigo)
