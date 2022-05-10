@@ -13,7 +13,7 @@ const io = require("socket.io")(httpServer, {
 });
 
 app.use(cors({
-    origin: '*'
+  origin: '*'
 }));
 
 
@@ -31,14 +31,14 @@ io.on("connection", (socket) => {
     console.log("Se ha recibido un nuevo usuario llamado : " + nombre);
 
     console.log("Usuarios conectados: ");
-    for(var i = 0; i<usuarios.length;i++){
+    for (var i = 0; i < usuarios.length; i++) {
       console.log(usuarios[i].nombre)
     }
     io.emit('actualiza usuarios', usuarios);
   });
 
 
-  
+
   socket.on('posicionX', function (msg, enemigo) {
     //  console.log("Se recibido la posicionX del enemigo : " + enemigo + " , es: " + msg);
     // io.emit('posicionX',msg,enemigo)
